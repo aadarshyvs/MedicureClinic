@@ -4,22 +4,23 @@ using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Medicure_Entity;
 
 namespace DataAccessLib
 {
-    internal class Appointment_Log_Dal : Base_Dal
+    public class Prescription_Log_Dal :Base_Dal
     {
-        public void BookAppointment(Appointment_Log ap)
+        
+        public void newPrescription(Prescription_Log pl)
         {
             SqlConnection cn = new SqlConnection(CnString);
-            string sql = $"insert into Appointment_Log(Appointment_ID,Patient_Id,Physician_Id,illness,Date_of_visit)  values('{ap.Appointment_ID}','{ap.Patient_Id}','{ap.illness}','{ap.Date_of_visit}')";
+            string sql = $"insert into Prescription_Log values({pl.Appointment_ID},{pl.Drug_Id},{pl.Dosage});";
             SqlCommand cmd = new SqlCommand(sql, cn);
             cn.Open();
             int i = cmd.ExecuteNonQuery();
             cn.Close();
             cn.Dispose();
+            Drug_Dal d = new Drug_Dal();
+            d.UpdateStock(pl.Drug_Id, pl.Dosage);
         }
     }
-
 }

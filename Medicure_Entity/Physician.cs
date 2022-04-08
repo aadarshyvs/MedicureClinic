@@ -1,4 +1,4 @@
-﻿namespace Medicure_Mvc.Models
+﻿namespace Medicure_Entity
 {
     public class Physician
     {

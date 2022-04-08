@@ -1,6 +1,6 @@
-﻿namespace Medicure_Mvc.Models
+﻿namespace Medicure_Entity
 {
-    public class Patients
+    public class Patient
     {
         public int Id { get; set; }
         public string Name { get; set; }
