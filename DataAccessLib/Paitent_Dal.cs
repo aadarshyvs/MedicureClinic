@@ -103,6 +103,31 @@ namespace DataAccessLib
             cn.Dispose();
             return p;
         }
+        public List<Appointment_Log> View_Appointment_History(int id)
+        {
+            SqlConnection cn = new SqlConnection(CnString);
+            string sql = $"  select Appointment_ID,Patient_Id,Physician_Id,illness,Date_of_visit from Appointment_Log where Patient_Id ={id}";
+            SqlCommand cmd = new SqlCommand(sql, cn);
+            cn.Open();
+            List<Appointment_Log> Appointments = new List<Appointment_Log>();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                Appointment_Log a = new Appointment_Log();
+                a.Appointment_ID = dr.GetInt32(0);
+                a.Patient_Id = dr.GetInt32(1);
+                a.Physician_Id = dr.GetInt32(2);
+                a.illness = dr.GetString(3);
+                a.Date_of_visit = dr.GetString(4);
+                Appointments.Add(a);
+            }
+            dr.Close();
+            cn.Close();
+            cn.Dispose();
+            return Appointments;
+
+
+        }
 
 
     }

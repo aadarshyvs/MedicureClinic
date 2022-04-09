@@ -12,7 +12,26 @@ namespace DataAccessLib
 {
     public class Drug_Dal : Base_Dal
     {
-
+        public void CreateDrug(Drug d)
+        {
+            SqlConnection cn = new SqlConnection(CnString);
+            string sql = $"INSERT INTO Drug(Id,Name,Price,Supplier_Id)VALUES({d.Id},'{d.Name}',{d.Price},{d.Supplier_Id})";
+            SqlCommand cmd = new SqlCommand(sql, cn);
+            cn.Open();
+            int i = cmd.ExecuteNonQuery();
+            cn.Close();
+            cn.Dispose();
+        }
+        public void DeleteDrug(int id)
+        {
+            SqlConnection cn = new SqlConnection(CnString);
+            string sql = $"DELETE FROM Drug WHERE Id={id};";
+            SqlCommand cmd = new SqlCommand(sql, cn);
+            cn.Open();
+            int i = cmd.ExecuteNonQuery();
+            cn.Close();
+            cn.Dispose();
+        }
         public List<Drug> GetAllDrug()
         {
             SqlConnection cn = new SqlConnection(CnString);
@@ -60,6 +79,7 @@ namespace DataAccessLib
             
             if(instock>Dreq)
             {
+
                 sql = $"UPDATE Drug SET Instock_Qty=Instock_Qty-{Dreq} WHERE Id={Did};";
                 cn = new SqlConnection(CnString);
                 cmd = new SqlCommand(sql, cn);
@@ -70,7 +90,7 @@ namespace DataAccessLib
 
                 if (instock - Dreq <= min)
                 {
-                    sql = $"UPDATE Drug SET Required_Qty=Required_Qty+100 WHERE Id={Dreq};";
+                    sql = $"UPDATE Drug SET Required_Qty=Required_Qty+100 WHERE Id={Did};";
                     cn = new SqlConnection(CnString);
                     cmd = new SqlCommand(sql, cn);
                     cn.Open();
@@ -86,7 +106,8 @@ namespace DataAccessLib
         {
             List<Drug> drugs = new List<Drug>();
             SqlConnection cn = new SqlConnection(CnString);
-            string sql = $"select Id,Name,Required_Qty,Price from Drug where Supplier_Id ={id}";
+            string sql = $"select Id,Name,Required_Qty,Price from Drug where Supplier_Id ={id} and Required_Qty != 0";
+            cn.Open();
             SqlCommand cmd = new SqlCommand(sql, cn);
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.HasRows)
@@ -100,6 +121,8 @@ namespace DataAccessLib
                 
                 drugs.Add(d);
             }
+            cn.Close();
+            cn.Dispose();
             return drugs;
 
         }

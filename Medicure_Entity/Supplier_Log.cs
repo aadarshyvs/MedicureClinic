@@ -12,5 +12,6 @@ namespace Medicure_Entity
         public int Physician_ID { get; set; }
         public int Drug_id { get; set; }
         public int Qty { get; set; }
+        public string Date { get; set; }
     }
 }

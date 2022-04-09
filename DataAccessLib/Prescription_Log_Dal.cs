@@ -21,6 +21,16 @@ namespace DataAccessLib
             cn.Dispose();
             Drug_Dal d = new Drug_Dal();
             d.UpdateStock(pl.Drug_Id, pl.Dosage);
+
+            //Set addeed Prescription_Status to true 
+            sql = $" UPDATE  Appointment_Log SET Prescription_Status = 1 where Appointment_ID={pl.Appointment_ID};";
+            cn = new SqlConnection(CnString);
+            cmd = new SqlCommand(sql, cn);
+            cn.Open();
+            i = cmd.ExecuteNonQuery();
+            cn.Close();
+            cn.Dispose();
         }
+
     }
 }

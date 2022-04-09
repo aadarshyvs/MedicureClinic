@@ -15,7 +15,7 @@ namespace DataAccessLib
         public void AddLog(Supplier_Log s)
         {
             SqlConnection cn = new SqlConnection(CnString);
-            string sql = $"insert into Supplier_Log values ({s.Supplier_Id},{s.Physician_ID},{s.Drug_id},{s.Qty})";
+            string sql = $"insert into Supplier_Log values ({s.Supplier_Id},{s.Physician_ID},{s.Drug_id},{s.Qty},'{s.Date}')";
             SqlCommand cmd = new SqlCommand(sql, cn);
             cn.Open();
             int i = cmd.ExecuteNonQuery();
@@ -28,7 +28,7 @@ namespace DataAccessLib
         {
             List<Supplier_Log> details = new List<Supplier_Log>();
             SqlConnection cn = new SqlConnection(CnString);
-            string sql = $"select Supplier_Id,Physician_ID,Drug_id,Qty from Supplier_Log where Supplier_Id={id}";
+            string sql = $"select Supplier_Id,Physician_ID,Drug_id,Qty,Date from Supplier_Log where Supplier_Id={id}";
             SqlCommand cmd = new SqlCommand(sql, cn);
             cn.Open();
 
@@ -50,7 +50,7 @@ namespace DataAccessLib
         {
             List<Supplier_Log> details = new List<Supplier_Log>();
             SqlConnection cn = new SqlConnection(CnString);
-            string sql = $"select Supplier_Id,Physician_ID,Drug_id,Qty from Supplier_Log where Physician_ID={id}";
+            string sql = $"select Supplier_Id,Physician_ID,Drug_id,Qty,Date from Supplier_Log where Physician_ID={id}";
             SqlCommand cmd = new SqlCommand(sql, cn);
             cn.Open();
 
