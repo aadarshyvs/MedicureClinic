@@ -1,0 +1,32 @@
+﻿@model Medicure_Entity.Patient
+
+@{
+    ViewData["Title"] = "Index";
+}
+   <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a asp-controller="Patient" asp-action="BookAppointment" asp-route-id="@Model.Id">Book Appointment</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a asp-controller="Patient" asp-action="EditPatient" asp-route-id="@Model.Id">Edit Details</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a asp-controller="Patient" asp-action="GetAllDrug" asp-route-id="@Model.Id">View Drugs</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a asp-controller="Patient" asp-action="ViewAppointmentHistory" asp-route-id="@Model.Id">View Appointment History</a>
+
+    </li>
+  </ol>
+</nav>
+
+<div>
+
+<h1>Welcome</h1>
+
+<div>
+    <h2>@Model.Name</h2>
+</div>
+</div>
+

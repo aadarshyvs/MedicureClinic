@@ -35,10 +35,20 @@ namespace Medicure_Api.Controllers
             }
 
         }
-        [HttpPost("AllPhysician")]
+        [HttpGet("GetPatientDetailsByID")]
+        public IActionResult GetPaitentById(int id)
+        {
+            return Ok(pd.GetPaitentById(id));
+        }
+        [HttpGet("AllPhysician")]
         public IActionResult GetAllPhysician()
         {
             return Ok(pyd.GetAllPhysician());
+        }
+        [HttpGet("GetPhysicianDetailsByID")]
+        public IActionResult GetPhysicianById(int id)
+        {
+            return Ok(pyd.PhysicianById(id));
         }
 
         [HttpPost("BookAppointment")]

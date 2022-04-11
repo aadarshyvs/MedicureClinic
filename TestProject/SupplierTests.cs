@@ -16,9 +16,10 @@ namespace TestProject
         {
             var item = sd.SupplierLogin("ram", "ram");
             var er = item.SupplierId;
-            var ar =1;
+            var ar = 1;
             Assert.AreEqual(er, ar);
 
         }
+
     }
 }

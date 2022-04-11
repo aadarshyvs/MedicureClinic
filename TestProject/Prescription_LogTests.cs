@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLib;
+using Medicure_Entity;
 using NUnit.Framework;
 namespace TestProject
 {

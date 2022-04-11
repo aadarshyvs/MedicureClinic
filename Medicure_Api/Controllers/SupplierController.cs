@@ -10,8 +10,10 @@ namespace Medicure_Api.Controllers
     public class SupplierController : ControllerBase
     {
         Drug_Dal dd;
+        Supplier_Dal sd;
         public SupplierController()
         {
+            sd = new Supplier_Dal();
             dd = new Drug_Dal();
         }
 
@@ -20,6 +22,12 @@ namespace Medicure_Api.Controllers
         {
             dd.CreateDrug(d);
             return Ok(d);
+        }
+        [HttpGet("SupplierById")]
+        public IActionResult SupplierById(int id)
+        {
+            return Ok(sd.SupplierById(id));
+            
         }
         [HttpDelete("DeleteDrug")]
         public IActionResult DeleteDrug(int id)
@@ -44,6 +52,11 @@ namespace Medicure_Api.Controllers
             dd.SupplierDrugsbtn(s);
             return Ok(s);
 
+        }
+        [HttpGet("DrugById")]
+        public IActionResult DrugById(int id)
+        {
+           return Ok( dd.DrugById(id));
         }
     }
 }

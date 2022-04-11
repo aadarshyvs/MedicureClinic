@@ -1,4 +1,5 @@
 ﻿using DataAccessLib;
+using Medicure_Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,16 @@ namespace Medicure_Api.Controllers
             pld = new Prescription_Log_Dal();
             sld = new Supplier_Log_Dal();
         }
-
+        [HttpGet("GetPhysicianDetailsByID")]
+        public IActionResult GetPhysicianById(int id)
+        {
+            return Ok(pd.PhysicianById(id));
+        }
+        [HttpGet("GetallDrugs")]
+        public IActionResult GetallDrugs()
+        {
+            return Ok(dd.GetAllDrug());
+        }
         [HttpGet("ViewAppointments")]
         public IActionResult View_Appointment(int id)
         {

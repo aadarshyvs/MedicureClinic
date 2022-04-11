@@ -26,14 +26,37 @@ namespace DataAccessLib
                             
 
             }
-
+            dr.Close();
             cn.Close();
             cn.Dispose();
             return s;
         }
+        public Supplier SupplierById(int id)
+        {
+            SqlConnection cn = new SqlConnection(CnString);
+            string sql = $"select Supplier_Id,Username,Password from Supplier where Supplier_Id={id}";
+            SqlCommand cmd = new SqlCommand(sql, cn);
+            cn.Open();
+            Supplier s = new Supplier();
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.HasRows)
+            {
+                dr.Read();
+                s.SupplierId = dr.GetInt32(0);
+                s.Username = dr.GetString(1);
+                s.Password = dr.GetString(2);
 
-        
-       
-        
+                
+            }
+            dr.Close();
+            cn.Close();
+            cn.Dispose();
+            return s;
+
+        }
+
+
+
+
     }
 }

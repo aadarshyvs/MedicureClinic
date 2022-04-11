@@ -1,0 +1,18 @@
+﻿@model Medicure_Entity.Supplier
+
+@{
+    ViewData["Title"] = "Index";
+}
+    <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a asp-controller="Supplier" asp-action="DrugsToBeSuppiled" asp-route-id="@Model.SupplierId">Drugs To Be Suppiled</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a asp-controller="Supplier" asp-action="CreateDrug" asp-route-id="@Model.SupplierId">Create Drug</a>
+    </li>
+
+  </ol>
+</nav>
+<h1>Index</h1>
+<h2>@Model.Username</h2>

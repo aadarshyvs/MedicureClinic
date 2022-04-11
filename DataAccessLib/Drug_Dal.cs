@@ -32,6 +32,33 @@ namespace DataAccessLib
             cn.Close();
             cn.Dispose();
         }
+        public Drug DrugById(int id)
+        {
+            SqlConnection cn = new SqlConnection(CnString);
+            string sql = $"Select Id,Name,Required_Qty,Instock_Qty,Price,Supplier_Id From Drug WHERE Id={id};";
+            SqlCommand cmd = new SqlCommand(sql, cn);
+            cn.Open();
+            Drug d = new Drug();
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            if (dr.HasRows)
+            {
+
+                dr.Read();
+                d.Id = Convert.ToInt32(dr[0]);
+                d.Name = dr[1].ToString();
+                d.Required_Qty = Convert.ToInt32(dr[2]);
+                d.Instock_Qty = Convert.ToInt32(dr[3]);
+                d.Price = Convert.ToInt64(dr[4]);
+                d.Supplier_Id = Convert.ToInt32(dr[5]);
+
+            }
+            dr.Close();
+            cn.Close();
+            cn.Dispose();
+            return d;
+        }
+
         public List<Drug> GetAllDrug()
         {
             SqlConnection cn = new SqlConnection(CnString);
@@ -41,10 +68,10 @@ namespace DataAccessLib
             List<Drug> DrugList = new List<Drug>();
             SqlDataReader dr = cmd.ExecuteReader();
             
-            if (dr.HasRows)
+            while(dr.Read())
             {
                 Drug d = new Drug();
-                dr.Read();
+                
                 d.Id = Convert.ToInt32(dr[0]);
                 d.Name = dr[1].ToString();
                 d.Required_Qty = Convert.ToInt32(dr[2]);
@@ -129,7 +156,7 @@ namespace DataAccessLib
         public void SupplierDrugsbtn(Supplier_Log s)
         {
             SqlConnection cn = new SqlConnection(CnString);
-            string sql = $"UPDATE Drug SET Required_Qty=Required_Qty-{s.Qty} , Instock_Qty=Instock_Qty+{s.Qty} WHERE Id={s.Drug_id};";
+            string sql = $"UPDATE Drug SET Required_Qty=Required_Qty-{s.Qty} ,Instock_Qty=Instock_Qty+{s.Qty} WHERE Id={s.Drug_id};";
             SqlCommand cmd = new SqlCommand(sql, cn);
             cn.Open();
             int i = cmd.ExecuteNonQuery();

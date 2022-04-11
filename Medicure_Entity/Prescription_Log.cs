@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLib
+namespace Medicure_Entity
 {
     public class Prescription_Log
     {
