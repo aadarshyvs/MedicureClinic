@@ -23,6 +23,13 @@ namespace Medicure_Api.Controllers
             dd.CreateDrug(d);
             return Ok(d);
         }
+        [HttpPost("SupplierLogin")]
+        public IActionResult SupplierLogin(Login l)
+        {
+            
+            return Ok(sd.SupplierLogin(l.Username, l.Password));
+        }
+
         [HttpGet("SupplierById")]
         public IActionResult SupplierById(int id)
         {

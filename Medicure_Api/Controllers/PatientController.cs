@@ -1,5 +1,6 @@
 ﻿using DataAccessLib;
 using Medicure_Entity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -8,6 +9,7 @@ namespace Medicure_Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class PatientController : ControllerBase
     {
         Paitent_Dal pd;
@@ -21,24 +23,29 @@ namespace Medicure_Api.Controllers
             dd = new Drug_Dal();
             pyd = new Physician_Dal();
 
+
         }
+
 
         [HttpPost("NewPaitents")]
         public IActionResult NewPaitents(Patient p)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            else
-            {
+
+
                 pd.NewPaitents(p);
                 return Ok(p);
-            }
+
 
         }
         [HttpGet("GetPatientDetailsByID")]
         public IActionResult GetPaitentById(int id)
         {
             return Ok(pd.GetPaitentById(id));
+        }
+        [HttpPost("PatientLogin")]
+        public IActionResult PatientLogin(Login l)
+        {
+            return Ok(pd.PatientLogin(l.Username, l.Password));
         }
         [HttpGet("AllPhysician")]
         public IActionResult GetAllPhysician()

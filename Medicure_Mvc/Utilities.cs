@@ -9,15 +9,15 @@ namespace Medicure_Mvc
 {
     public static class Utilities
     {
-        public async static  Task<T> GetResponseFromApi<T>
+        public async static Task<T> GetResponseFromApi<T>
             (this Controller controller,
             string baseUri,
             string requestUrl)
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri( baseUri);
-
+                client.BaseAddress = new Uri(baseUri);
+                
                 var responce = await client.GetAsync(requestUrl);
 
                 if (responce.IsSuccessStatusCode)
@@ -26,7 +26,7 @@ namespace Medicure_Mvc
                     return result;
                 }
                 else
-                return default(T);
+                    return default(T);
             }
         }
 
@@ -36,11 +36,11 @@ namespace Medicure_Mvc
            string requestUrl,
            T model)
         {
-            
+
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUri);
-               
+                
                 var response = await client.PostAsync(
                     requestUri: requestUrl,
                     content: JsonContent.Create(
@@ -51,9 +51,31 @@ namespace Medicure_Mvc
                     ));
 
 
-           }
-                return default(T);
+            }
+            return default(T);
         }
+        public async static Task<TResult> SendDataToApi<TInput, TResult>(
+            this Controller controller,
+            string baseUri,
+            string requestUrl,
+            TInput model)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUri);
+              
+                var response = await client.PostAsJsonAsync(requestUrl, model);
+                //response.EnsureSuccessStatusCode();
+                var i = response.IsSuccessStatusCode;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<TResult>();
+                    return result;
+                }
 
+                return default(TResult);
+            }
+
+        }
     }
 }

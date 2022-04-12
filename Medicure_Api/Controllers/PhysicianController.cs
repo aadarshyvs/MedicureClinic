@@ -7,6 +7,7 @@ namespace Medicure_Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class PhysicianController : ControllerBase
     {
         Appointment_Log_Dal ald;
@@ -23,6 +24,17 @@ namespace Medicure_Api.Controllers
             pad = new Paitent_Dal();
             pld = new Prescription_Log_Dal();
             sld = new Supplier_Log_Dal();
+        }
+        [HttpPost("PhysicianLogin")]
+        public IActionResult PhysicianLogin(Login l)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            else
+            {
+                return Ok( pd.PhysicianLogin(l.Username, l.Password));
+
+            }
         }
         [HttpGet("GetPhysicianDetailsByID")]
         public IActionResult GetPhysicianById(int id)

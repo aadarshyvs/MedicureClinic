@@ -6,32 +6,34 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System;
+using ProjectsMVCApp;
 
 namespace Medicure_Mvc.Controllers
 {
+
     public class PatientController : Controller
     {
         private IConfiguration configuration;
-        private static int _id; 
+        private static int _id;
         public PatientController(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
-        
+
         public async Task<IActionResult> Index(int id)
         {
             _id = id;
             var model = await this.GetResponseFromApi<Patient>(
                 baseUri: configuration.GetConnectionString("PatientUri"),
                 requestUrl: $"api/Patient/GetPatientDetailsByID?id={id}"
-                
+
                 );
             model.Id = id;
             return View(model);
         }
 
 
-        public async Task< IActionResult> BookAppointment(int id)
+        public async Task<IActionResult> BookAppointment(int id)
         {
             ViewBag.Id = id;
             var l = await this.GetResponseFromApi<List<Physician>>(
@@ -39,7 +41,7 @@ namespace Medicure_Mvc.Controllers
                 requestUrl: "/api/Patient/AllPhysician"
                 );
             List<string> dl = new List<string>();
-            foreach(var i in l)
+            foreach (var i in l)
             {
                 string s = i.Id + "-" + i.Name + " " + i.Specialization;
                 dl.Add(s);
@@ -48,12 +50,12 @@ namespace Medicure_Mvc.Controllers
             return View();
         }
         [HttpPost]
-        public async Task< IActionResult> BookAppointment(IFormCollection form)
+        public async Task<IActionResult> BookAppointment(IFormCollection form)
         {
             Appointment_Log ap = new Appointment_Log();
-            ap.Appointment_ID = Convert.ToInt32( form["Appointment_ID"]);
-            
-            ap.Patient_Id= Convert.ToInt32(form["Patient_Id"]);
+            ap.Appointment_ID = Convert.ToInt32(form["Appointment_ID"]);
+
+            ap.Patient_Id = Convert.ToInt32(form["Patient_Id"]);
             var s = form["Physician_Id"].ToString().Split('-');
 
             ap.Physician_Id = Convert.ToInt32(s[0]);
@@ -65,10 +67,42 @@ namespace Medicure_Mvc.Controllers
                 requestUrl: "api/Patient/BookAppointment",
                 ap
                 );
-            return RedirectToAction("Index",new {@id=_id});
+            return RedirectToAction("Index", new { @id = _id });
 
 
         }
+        public IActionResult NewPaitents()
+        {
+            var model = new Patient();
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> NewPaitents(IFormCollection form)
+
+
+
+        {
+            Patient d = new Patient();
+
+            d.Name = form["Name"];
+            d.MobileNo = form["MobileNo"];
+            d.DateOfReg = form["DateOfReg"];
+            d.Username = form["Username"];
+            d.Password = form["Password"];
+
+
+
+            var model = await this.SendDataToApi<Patient>(
+            baseUri: configuration.GetConnectionString("SupplierUri"),
+            requestUrl: $"api/Patient/NewPaitents",
+            d
+            );
+            return RedirectToAction("Login", "Home");
+
+
+
+        }
+
         public async Task<IActionResult> EditPatient(int id)
         {
             var model = await this.GetResponseFromApi<Patient>(
@@ -92,11 +126,11 @@ namespace Medicure_Mvc.Controllers
                 baseUri: configuration.GetConnectionString("PatientUri"),
                 requestUrl: $"api/Patient/EditPatient",
                 p
-                
+
                 );
             return RedirectToAction("Index", new { @id = _id });
         }
-        public async Task<IActionResult> GetAllDrug( int id )
+        public async Task<IActionResult> GetAllDrug(int id)
         {
             ViewBag.Id = id;
             var model = await this.GetResponseFromApi<List<Drug>>(
@@ -126,7 +160,7 @@ namespace Medicure_Mvc.Controllers
             return View(model);
         }
 
-  
+
         //Not needed
         public async Task<IActionResult> GetAllPatient()
         {
@@ -134,9 +168,15 @@ namespace Medicure_Mvc.Controllers
                 baseUri: configuration.GetConnectionString("PatientUri"),
                 requestUrl: "/api/Patient/GetAllPatient"
                 );
-            
+
             return View(model);
         }
+        public async Task<IActionResult> Logout()
+        {
+            _id = 0;
+            return RedirectToAction("Login","Home");
+        }
+
 
 
     }

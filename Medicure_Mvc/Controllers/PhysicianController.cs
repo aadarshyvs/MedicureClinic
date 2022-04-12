@@ -94,6 +94,11 @@ namespace Medicure_Mvc.Controllers
                 );
             return View(model);
         }
+        public async Task<IActionResult> Logout()
+        {
+            _id = 0;
+            return RedirectToAction("Login", "Home");
+        }
 
     }
 }

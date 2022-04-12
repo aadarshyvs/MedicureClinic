@@ -88,6 +88,11 @@ namespace Medicure_Mvc.Controllers
             return RedirectToAction("Index", new { @id = _id });
 
         }
+        public async Task<IActionResult> Logout()
+        {
+            _id = 0;
+            return RedirectToAction("Login", "Home");
+        }
 
     }
 }

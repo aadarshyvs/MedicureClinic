@@ -28,6 +28,7 @@ namespace Medicure_Api
             services.AddScoped<DataAccessLib.Paitent_Dal>();
             services.AddScoped<DataAccessLib.Appointment_Log_Dal>();
 
+            services.Configure<Authentication.AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -47,7 +48,8 @@ namespace Medicure_Api
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
+            app.UseMiddleware<Authentication.JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
