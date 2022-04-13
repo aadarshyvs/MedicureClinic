@@ -16,6 +16,12 @@ namespace Medicure_Api.Controllers
             sd = new Supplier_Dal();
             dd = new Drug_Dal();
         }
+        [HttpPost("NewSupplier")]
+        public IActionResult NewSupplier(Supplier s)
+        {
+            sd.NewSupplier(s);
+            return Ok(s);
+        }
 
         [HttpPost("CreateDrug")]
         public IActionResult CreateDrug(Drug d)

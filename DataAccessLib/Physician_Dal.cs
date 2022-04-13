@@ -10,6 +10,18 @@ namespace DataAccessLib
 {
     public class Physician_Dal : Base_Dal
     {
+
+        public void NewPhysician(Physician p)
+        {
+
+            SqlConnection cn = new SqlConnection(CnString);
+            string sql = $"insert into Physician(Name,Specialization,Username,Password)  values('{p.Name}','{p.Specialization}','{p.Username}','{p.Password}')";
+            SqlCommand cmd = new SqlCommand(sql, cn);
+            cn.Open();
+            int i = cmd.ExecuteNonQuery();
+            cn.Close();
+            cn.Dispose();
+        }
         public List<Appointment_Log> View_Appointment(int id)
         {
             SqlConnection cn = new SqlConnection(CnString);

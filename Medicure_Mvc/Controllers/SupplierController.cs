@@ -10,27 +10,33 @@ namespace Medicure_Mvc.Controllers
 {
     public class SupplierController : Controller
     {
-        public static int _id;
+        private static int _id;
         IConfiguration configuration;
 
         public SupplierController(IConfiguration configuration)
         {
-            _id = 0;
+            
+            
             this.configuration = configuration;
         }
 
         public async Task<IActionResult> Index(int id)
         {
-            _id = id;
+            _id =id;
             var model = await this.GetResponseFromApi<Supplier>(
                 baseUri: configuration.GetConnectionString("SupplierUri"),
                 requestUrl: $"api/Supplier/SupplierById?id={id}"
 
                 );
+            //if (_id == 0)
+            //{
+            //    return RedirectToAction("Login", "Home");
+            //}
             return View(model);
         }
         public async Task<IActionResult> DrugsToBeSuppiled(int id)
         {
+            
             ViewBag.Sid = id;
             var model = await this.GetResponseFromApi<List<Drug>>(
                 baseUri: configuration.GetConnectionString("SupplierUri"),
@@ -66,6 +72,7 @@ namespace Medicure_Mvc.Controllers
 
         public IActionResult CreateDrug(int id)
         {
+            
             ViewBag.Id = id;
             return View();
         }
@@ -85,7 +92,7 @@ namespace Medicure_Mvc.Controllers
                 requestUrl: $"api/Supplier/CreateDrug",
                 d
                );
-            return RedirectToAction("Index", new { @id = _id });
+            return RedirectToAction("Index","Supplier", new { @id = _id});
 
         }
         public async Task<IActionResult> Logout()

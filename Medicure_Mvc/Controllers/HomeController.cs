@@ -159,7 +159,19 @@ namespace Medicure_Mvc.Controllers
                         }
                     }
                 }
+                    else if (l.Type == "Admin")
+                    {
+                if (l.Username == "admin" && l.Password == "admin")
+                {
+                    return RedirectToAction(actionName: "Index", controllerName: "Admin");
+                }
+                else
+                {
+                    return RedirectToAction("Login");
+                }
 
+
+                    }
                 else
                 {
                     return RedirectToAction("Login");

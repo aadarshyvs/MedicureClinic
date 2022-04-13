@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table h4">
     <thead>
         <tr>
             <th>
@@ -44,10 +44,10 @@
                 @Html.DisplayFor(modelItem => item.Date_of_visit)
             </td>
             <td>
-               <a asp-controller="Physician" asp-action="AddPrescription" asp-route-id=@item.Appointment_ID> Add Prescription </a>
+               <a class="btn btn-lg btn-outline-success" asp-controller="Physician" asp-action="AddPrescription" asp-route-id=@item.Appointment_ID> Add Prescription </a>
             </td>
             <td>
-               <a asp-controller="Physician" asp-action="GetPatientDetailsByID" asp-route-id=@item.Patient_Id > View Details </a>
+               <a class="btn btn-lg btn-outline-warning" asp-controller="Physician" asp-action="GetPatientDetailsByID" asp-route-id=@item.Patient_Id > View Details </a>
             </td>
         </tr>
 }
@@ -55,6 +55,6 @@
 </table>
 
 <div>
-    <a asp-controller="Patient" asp-action="Index" asp-route-id="@ViewBag.Id">Back</a>
+    <a class="btn btn-lg btn-outline-warning" asp-controller="Patient" asp-action="Index" asp-route-id="@ViewBag.Id">Back</a>
 
 </div>

@@ -10,6 +10,17 @@ namespace DataAccessLib
 {
     public class Supplier_Dal :Base_Dal
     {
+        public void NewSupplier(Supplier S)
+        {
+
+            SqlConnection cn = new SqlConnection(CnString);
+            string sql = $"insert into Supplier(Supplier_Id,Username,Password)  values({S.SupplierId},'{S.Username}','{S.Password}')";
+            SqlCommand cmd = new SqlCommand(sql, cn);
+            cn.Open();
+            int i = cmd.ExecuteNonQuery();
+            cn.Close();
+            cn.Dispose();
+        }
         public Supplier SupplierLogin(string username, string password)
         {
             Supplier s = new Supplier();

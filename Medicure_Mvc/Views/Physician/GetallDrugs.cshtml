@@ -6,10 +6,8 @@
 
 <h1>GetallDrugs</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+
+<table class="table h4">
     <thead>
         <tr>
             <th>
@@ -53,3 +51,7 @@
 }
     </tbody>
 </table>
+<div>
+    <a class="btn btn-outline-light"  asp-controller="Patient" asp-action="Index" asp-route-id="@ViewBag.Id">Back</a>
+</div>
+

@@ -36,6 +36,12 @@ namespace Medicure_Api.Controllers
 
             }
         }
+        [HttpPost("NewPhysician")]
+        public IActionResult NewPhysician(Physician p)
+        {
+            pd.NewPhysician(p);
+            return Ok(p);
+        }
         [HttpGet("GetPhysicianDetailsByID")]
         public IActionResult GetPhysicianById(int id)
         {

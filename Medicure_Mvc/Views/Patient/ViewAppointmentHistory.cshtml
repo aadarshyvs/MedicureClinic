@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<Medicure_Entity.Appointment_Log>
 
 @{
-    ViewData["Title"] = "ViewAppointmentHistory";
+    ViewData["Title"] = "ViewAppointmentHistorys";
 }
 
 <h1>View Your Appointment History</h1>
 
 
-<table class="table">
-    <thead>
-        <tr>
+<table class="table h4">
+    <thead >
+        <tr >
             <th>
                 @Html.DisplayNameFor(model => model.Appointment_ID)
             </th>
@@ -47,13 +47,15 @@
                 @Html.DisplayFor(modelItem => item.Date_of_visit)
             </td>
             <td>
-                <a asp-controller="Patient" asp-action="GetPhysicianDetailsByID" asp-route-id="@item.Physician_Id">Get Details</a>
+                <a class="btn btn-outline-light btn-sm asp-controller="Patient" asp-action="GetPhysicianDetailsByID" asp-route-id="@item.Physician_Id">Get Details</a>
             </td>
 
         </tr>
-}
-    </tbody>
+
+ }
+ </tbody>
 </table>
+
 <div>
-    <a asp-controller="Patient" asp-action="Index" asp-route-id="@ViewBag.Id">Back</a>
+    <a class="btn btn-outline-light"  asp-controller="Patient" asp-action="Index" asp-route-id="@ViewBag.Id">Back</a>
 </div>

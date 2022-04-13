@@ -4,28 +4,35 @@
     ViewData["Title"] = "GetPhysicianDetailsByID";
 }
 
-<h1>GetPhysicianDetailsByID</h1>
+<h1>Get Physician Details</h1>
 
 <div>
     <h4>Physician</h4>
     <hr />
-    <dl class="row">
+    <dl class="row ">
      
-        <dt class = "col-sm-2">
+        <dt class = "h3 col-xxl-4 text-xxl">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+        <dd class = "h1  col-xxl-4 text-xxl">
+            @Html.DisplayFor(model => model.Name)       
         </dd>
-        <dt class = "col-sm-2">
+        </dl>
+
+        <dl class="row ">
+
+        <dt class = "h3 col-xxl-4 text-xxl">
             @Html.DisplayNameFor(model => model.Specialization)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = " h1 col-xxl-4 text-xxl">
             @Html.DisplayFor(model => model.Specialization)
         </dd>
         
 
     </dl>
 
+</div>
+<div>
+    <a class="btn btn-outline-light"  asp-controller="Patient" asp-action="ViewAppointmentHistory" asp-route-id="@ViewBag.Id">Back</a>
 </div>
 

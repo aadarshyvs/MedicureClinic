@@ -29,6 +29,10 @@ namespace Medicure_Mvc.Controllers
 
                 );
             model.Id = id;
+            if (_id == 0)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View(model);
         }
 
@@ -53,15 +57,24 @@ namespace Medicure_Mvc.Controllers
         public async Task<IActionResult> BookAppointment(IFormCollection form)
         {
             Appointment_Log ap = new Appointment_Log();
-            ap.Appointment_ID = Convert.ToInt32(form["Appointment_ID"]);
+            try
+            {
+                TempData["error"] = null;
+                ap.Appointment_ID = Convert.ToInt32(form["Appointment_ID"]);
 
-            ap.Patient_Id = Convert.ToInt32(form["Patient_Id"]);
-            var s = form["Physician_Id"].ToString().Split('-');
+                ap.Patient_Id = Convert.ToInt32(form["Patient_Id"]);
 
-            ap.Physician_Id = Convert.ToInt32(s[0]);
-            ap.illness = form["illness"];
-            ap.Date_of_visit = form["Date_of_visit"];
 
+                ap.Physician_Id = Convert.ToInt32(form["Physician_Id"]);
+                ap.illness = form["illness"];
+                ap.Date_of_visit = form["Date_of_visit"];
+            }
+            catch
+            {
+
+                TempData["error"] = "I am from different action";
+                return RedirectToAction("Index", new { @id = _id });
+            }
             var model = await this.SendDataToApi<Appointment_Log>(
                 baseUri: configuration.GetConnectionString("PatientUri"),
                 requestUrl: "api/Patient/BookAppointment",
@@ -93,7 +106,7 @@ namespace Medicure_Mvc.Controllers
 
 
             var model = await this.SendDataToApi<Patient>(
-            baseUri: configuration.GetConnectionString("SupplierUri"),
+            baseUri: configuration.GetConnectionString("PatientUri"),
             requestUrl: $"api/Patient/NewPaitents",
             d
             );
@@ -152,6 +165,7 @@ namespace Medicure_Mvc.Controllers
         }
         public async Task<IActionResult> GetPhysicianDetailsByID(int id)
         {
+            ViewBag.Id = _id;
             var model = await this.GetResponseFromApi<Physician>(
                 baseUri: configuration.GetConnectionString("PatientUri"),
                 requestUrl: $"/api/Patient/GetPhysicianDetailsByID?id={id}"

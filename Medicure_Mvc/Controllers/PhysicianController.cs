@@ -11,7 +11,7 @@ namespace Medicure_Mvc.Controllers
     public class PhysicianController : Controller
     {
         private IConfiguration configuration;
-        private int _id = 0;
+        private static int _id = 0;
         public PhysicianController(IConfiguration configuration)
         {
             this.configuration = configuration;
@@ -19,10 +19,15 @@ namespace Medicure_Mvc.Controllers
 
         public async Task<IActionResult> Index(int id)
         {
+            _id = id;
             var model = await this.GetResponseFromApi<Physician>(
               baseUri: configuration.GetConnectionString("PhysicianUri"),
                 requestUrl: $"api/Physician/GetPhysicianDetailsByID?id={id}"
                 );
+            if (_id == 0)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View(model);
         }
         public async Task<IActionResult> ViewAppointments(int id)
@@ -35,7 +40,6 @@ namespace Medicure_Mvc.Controllers
         }
         public async Task< IActionResult> AddPrescription(int id, int pid)
         {
-            _id = id;
             ViewBag.Id = id;
             ViewBag.pid = pid;
             var model = await this.GetResponseFromApi<List<Drug>>(
@@ -50,18 +54,25 @@ namespace Medicure_Mvc.Controllers
             }
             ViewBag.ddl = dl;
             return View();
+
         }
         [HttpPost]
         public IActionResult AddPrescription(IFormCollection form)
         {
-
-
+            TempData["error"] = null;
             Prescription_Log p = new Prescription_Log();
-
-            p.Appointment_ID = Convert.ToInt32(form["Appointment_ID"]);
-            var str = form["Drug_Id"].ToString().Split('-');
-            p.Drug_Id = Convert.ToInt32(str[0]);
-            p.Dosage = Convert.ToInt32(form["Dosage"]);
+            try
+            {
+                p.Appointment_ID = Convert.ToInt32(form["Appointment_ID"]);
+                p.Drug_Id = Convert.ToInt32(form["Drug_Id"]);
+                p.Dosage = Convert.ToInt32(form["Dosage"]);
+            }
+            catch(Exception ex)
+            {
+                TempData["error"] = "I am from different action";
+                return RedirectToAction("Index", new { @id = _id});
+                
+            }
             var model = this.SendDataToApi<Prescription_Log>(
                 baseUri: configuration.GetConnectionString("PhysicianUri"),
                 requestUrl: $"api/Physician/AddPrescription",

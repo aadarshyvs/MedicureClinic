@@ -4,39 +4,40 @@
     ViewData["Title"] = "GetAllDrug";
 }
 
-<h1>All Drugs Aviable</h1>
+<h1>Get All Drug</h1>
 
-<table class="tablel" >
+<table class="table h3">
     <thead>
         <tr>
-            
+
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            
+
+
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            
+
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            
+
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            
+
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            
         </tr>
 }
     </tbody>
 </table>
 <div>
-    <a asp-controller="Patient" asp-action="Index" asp-route-id="@ViewBag.Id">Back</a>
+    <a class="btn btn-outline-light"  asp-controller="Patient" asp-action="Index" asp-route-id="@ViewBag.Id">Back</a>
 </div>
+
