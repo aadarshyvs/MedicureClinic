@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Medicure_Entity.Supplier_Log>
+
+@{
+    ViewData["Title"] = "Supplier_Log_Details";
+}
+
+<h1>Supplier_Log_Details</h1>
+<table class="table h3">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Drug_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Qty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drug_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+     <a class="btn btn-outline-light" asp-controller="Supplier" asp-action="Index" asp-route-id="@ViewBag.Id">Back</a>
+</div>

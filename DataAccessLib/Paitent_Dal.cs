@@ -39,7 +39,7 @@ namespace DataAccessLib
         {
 
             SqlConnection cn = new SqlConnection(CnString);
-            string sql = $"insert into Patient(Name,MobileNo,DateOfReg,Username,Password)  values('{p.Name}','{p.MobileNo}','{p.DateOfReg}','{p.Username}','{p.Password}')";
+            string sql = $"insert into Patient(Name,MobileNo,DateOfReg,Username,Password)  values('{p.Name}','{p.MobileNo}','{DateTime.Now.ToString()}','{p.Username}','{p.Password}')";
             SqlCommand cmd = new SqlCommand(sql, cn);
             cn.Open();
             int i =cmd.ExecuteNonQuery();

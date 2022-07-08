@@ -27,8 +27,11 @@
     <li class="navbar-brand">
         <a asp-controller="Supplier" asp-action="CreateDrug" asp-route-id="@Model.SupplierId">Create Drug</a>
     </li>
-    <li class="nav-item">
-        <a class="navbar-brand" asp-controller="Supplier" asp-action="Logout" >Logout</a>
+@*    <li class="navbar-brand">
+        <a  asp-controller="Supplier" asp-action="Supplier_Log_Details" asp-route-id="@Model.SupplierId">Log</a>
+        </li>*@
+    <li class="navbar-brand">
+        <a  asp-controller="Supplier" asp-action="Logout" >Logout</a>
         </li>
 
 
@@ -37,5 +40,7 @@
     </div>
   </div>
 </nav>
+<div class="center">
 <h1>Index</h1>
 <h2>@Model.Username</h2>
+</div>

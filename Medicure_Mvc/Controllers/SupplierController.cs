@@ -20,6 +20,7 @@ namespace Medicure_Mvc.Controllers
             this.configuration = configuration;
         }
 
+
         public async Task<IActionResult> Index(int id)
         {
             _id =id;
@@ -32,6 +33,16 @@ namespace Medicure_Mvc.Controllers
             //{
             //    return RedirectToAction("Login", "Home");
             //}
+            return View(model);
+        }
+        public async Task<IActionResult> Supplier_Log_Details(int id)
+        {
+            ViewBag.Id = _id;
+
+            var model = await this.GetResponseFromApi< List<Supplier_Log>>(
+                baseUri: configuration.GetConnectionString("SupplierUri"),
+                requestUrl: $"api/Supplier/Supplier_Log_Details?id={id}"
+                );
             return View(model);
         }
         public async Task<IActionResult> DrugsToBeSuppiled(int id)

@@ -11,8 +11,10 @@ namespace Medicure_Api.Controllers
     {
         Drug_Dal dd;
         Supplier_Dal sd;
+        Supplier_Log_Dal sld;
         public SupplierController()
         {
+            sld = new Supplier_Log_Dal();
             sd = new Supplier_Dal();
             dd = new Drug_Dal();
         }
@@ -70,6 +72,11 @@ namespace Medicure_Api.Controllers
         public IActionResult DrugById(int id)
         {
            return Ok( dd.DrugById(id));
+        }
+        [HttpGet("Supplier_Log_Details")]
+        public IActionResult Supplier_Log_Details(int id)
+        {
+            return Ok(sld.Supplier_Log_Details(id));
         }
     }
 }

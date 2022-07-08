@@ -137,10 +137,10 @@ namespace DataAccessLib
             cn.Open();
             SqlCommand cmd = new SqlCommand(sql, cn);
             SqlDataReader dr = cmd.ExecuteReader();
-            if (dr.HasRows)
+            while (dr.Read())
             {
                 Drug d = new Drug();
-                dr.Read();
+                
                 d.Id = Convert.ToInt32(dr[0]);
                 d.Name = dr[1].ToString();
                 d.Required_Qty = Convert.ToInt32(dr[2]);

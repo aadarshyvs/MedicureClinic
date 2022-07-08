@@ -15,7 +15,7 @@ namespace DataAccessLib
         public void AddLog(Supplier_Log s)
         {
             SqlConnection cn = new SqlConnection(CnString);
-            string sql = $"insert into Supplier_Log (Supplier_Id,Drug_id,Qty,Date) values ({s.Supplier_Id},{s.Drug_id},{s.Qty},'{s.Date}')";
+            string sql = $"insert into Supplier_Log (Supplier_Id,Drug_id,Qty,Date) values ({s.Supplier_Id},{s.Drug_id},{s.Qty},'{DateTime.Now.ToString()}')";
             SqlCommand cmd = new SqlCommand(sql, cn);
             cn.Open();
             int i = cmd.ExecuteNonQuery();
@@ -37,7 +37,7 @@ namespace DataAccessLib
             {
                 Supplier_Log s = new Supplier_Log();
                 s.Supplier_Id = dr.GetInt32(0);
-                s.Physician_ID = dr.GetInt32(1);
+               
                 s.Drug_id = dr.GetInt32(2);
                 s.Qty = dr.GetInt32(3);
                 details.Add(s);

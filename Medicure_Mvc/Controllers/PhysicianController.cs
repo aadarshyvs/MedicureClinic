@@ -11,7 +11,7 @@ namespace Medicure_Mvc.Controllers
     public class PhysicianController : Controller
     {
         private IConfiguration configuration;
-        private static int _id = 0;
+        private static int _id;
         public PhysicianController(IConfiguration configuration)
         {
             this.configuration = configuration;
@@ -32,6 +32,7 @@ namespace Medicure_Mvc.Controllers
         }
         public async Task<IActionResult> ViewAppointments(int id)
         {
+            ViewBag.Id = _id;
             var model = await this.GetResponseFromApi<List<Appointment_Log>>(
                   baseUri: configuration.GetConnectionString("PhysicianUri"),
                 requestUrl: $"api/Physician/ViewAppointments?id={id}"
@@ -41,7 +42,7 @@ namespace Medicure_Mvc.Controllers
         public async Task< IActionResult> AddPrescription(int id, int pid)
         {
             ViewBag.Id = id;
-            ViewBag.pid = pid;
+            ViewBag.pid = _id;
             var model = await this.GetResponseFromApi<List<Drug>>(
                baseUri: configuration.GetConnectionString("PhysicianUri"),
                requestUrl: $"api/Physician/GetallDrugs"
@@ -82,6 +83,7 @@ namespace Medicure_Mvc.Controllers
         }
         public async Task<IActionResult> GetPatientDetailsByID(int id)
         {
+            ViewBag.Id = _id;
             var model = await this.GetResponseFromApi<Patient>(
                 baseUri: configuration.GetConnectionString("PhysicianUri"),
                 requestUrl: $"api/Physician/GetPatientDetailsByID?id={id}"
@@ -91,6 +93,7 @@ namespace Medicure_Mvc.Controllers
         }
         public async Task<IActionResult> GetallDrugs()
         {
+            ViewBag.Id = _id;
             var model = await this.GetResponseFromApi<List<Drug>>(
                 baseUri: configuration.GetConnectionString("PhysicianUri"),
                 requestUrl: $"api/Physician/GetallDrugs"
@@ -99,6 +102,7 @@ namespace Medicure_Mvc.Controllers
         }
         public async Task<IActionResult> AppointmentHistory(int id)
         {
+            ViewBag.Id = _id;
             var model = await this.GetResponseFromApi<List<Appointment_Log>>(
                 baseUri: configuration.GetConnectionString("PhysicianUri"),
                 requestUrl: $"api/Physician/AppointmentHistory?id={id}"

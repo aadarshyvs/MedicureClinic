@@ -145,7 +145,7 @@ namespace Medicure_Mvc.Controllers
         }
         public async Task<IActionResult> GetAllDrug(int id)
         {
-            ViewBag.Id = id;
+            ViewBag.Id = _id;
             var model = await this.GetResponseFromApi<List<Drug>>(
                 baseUri: configuration.GetConnectionString("PatientUri"),
                 requestUrl: $"api/Patient/ViewDrugs"
